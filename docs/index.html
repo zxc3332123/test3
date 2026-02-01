@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>知識試煉 - 原神風格翻牌挑戰</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="mascot_style.css">
+    <!-- Google Fonts for Genshin-like typography -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Noto+Serif+TC:wght@400;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-background">
+        <!-- Optional: animated stars or particles can be added here via CSS/JS -->
+        <div class="stars"></div>
+        <div class="twinkling"></div>
+    </div>
+
+    <div id="app" class="container">
+        <!-- Start Screen -->
+        <section id="start-screen" class="screen active">
+            <div class="content-wrapper">
+                <h1 class="game-title">星辰知識試煉</h1>
+                <p class="game-subtitle">揭開古老的智慧篇章</p>
+                <button id="start-btn" class="genshin-btn primary-btn">
+                    <span class="btn-icon">✦</span>
+                    <span class="btn-text">開啟試煉</span>
+                    <span class="btn-icon">✦</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Game Screen -->
+        <section id="game-screen" class="screen hidden">
+            <div class="header-hud">
+                <div class="progress-bar">
+                    <span id="current-count">1</span> / <span id="total-count">10</span>
+                </div>
+                <button id="reset-btn" class="genshin-btn small-btn">重新洗牌</button>
+            </div>
+
+            <div class="card-area">
+                <div class="mascot-container">
+                    <img src="mascot_0.png" alt="Liyue Mascot" class="mascot-img">
+                </div>
+                <div class="card-container">
+                    <div class="card" id="knowledge-card">
+                        <div class="card-face card-front">
+                            <div class="card-border"></div>
+                            <div class="card-content">
+                                <div class="element-icon">⚛</div>
+                                <h2 id="card-title">知識標題</h2>
+                                <p class="card-instruction">點擊翻轉</p>
+                            </div>
+                        </div>
+                        <div class="card-face card-back">
+                            <div class="card-border"></div>
+                            <div class="card-content">
+                                <p id="card-description">這裡是知識說明的區域...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="controls">
+                <button id="next-btn" class="genshin-btn secondary-btn">
+                    前往下個挑戰 ➜
+                </button>
+            </div>
+        </section>
+
+        <!-- Completion Screen -->
+        <section id="completion-screen" class="screen hidden">
+            <div class="content-wrapper">
+                <div class="completion-icon">🏆</div>
+                <h2 class="completion-title">挑戰完成</h2>
+                <p class="completion-desc">你已經掌握了所有的知識點！</p>
+                <button id="restart-btn" class="genshin-btn primary-btn">再次挑戰</button>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

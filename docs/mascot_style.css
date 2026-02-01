@@ -1,0 +1,52 @@
+/* Mascot Styles */
+.mascot-container {
+    position: absolute;
+    bottom: -40px;
+    right: -80px;
+    /* Position to the right side of the card */
+    z-index: 20;
+    /* Above card background but below popups if any */
+    pointer-events: none;
+    animation: floatMascot 6s ease-in-out infinite;
+    /* Ensure it doesn't overflow drastically on mobile */
+    max-width: 200px;
+}
+
+.mascot-img {
+    width: 200px;
+    /* Larger to feel more present */
+    height: auto;
+    filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.4));
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    opacity: 1;
+}
+
+/* Card Area needs relative positioning for absolute child to work */
+.card-area {
+    position: relative;
+    /* Existing styles in style.css for card-area are: perspective: 1000px; margin: 30px auto; width: 300px; height: 420px; */
+}
+
+@keyframes floatMascot {
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(2deg);
+    }
+
+    50% {
+        transform: translateY(-10px) rotate(0deg);
+    }
+}
+
+@media (max-width: 480px) {
+    .mascot-container {
+        width: 140px;
+        bottom: -30px;
+        right: -40px;
+    }
+
+    .mascot-img {
+        width: 100%;
+    }
+}

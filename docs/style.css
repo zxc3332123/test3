@@ -1,0 +1,383 @@
+:root {
+    --primary-gold: #d4af37;
+    --secondary-gold: #fcf6ba;
+    --deep-blue: #1b1b3a;
+    --abyss-blue: #0f0f23;
+    --text-color: #eee;
+    --card-bg-front: #2a2a4e;
+    --card-bg-back: #f4e4bc;
+    /* Parchment color */
+    --card-text-back: #2c1810;
+    --glow-color: rgba(212, 175, 55, 0.6);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Noto Serif TC', serif;
+    color: var(--text-color);
+    background-color: var(--abyss-blue);
+    overflow: hidden;
+    /* Prevent scrolling during game */
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Background Animation */
+.app-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+    overflow: hidden;
+}
+
+.stars {
+    width: 1px;
+    height: 1px;
+    background: transparent;
+    box-shadow: 100px 100px #FFF, 200px 200px #FFF, 300px 300px #FFF, 400px 100px #FFF, 500px 400px #FFF, 600px 200px #FFF, 800px 500px #FFF;
+    /* Simplified stars */
+    animation: animStar 50s linear infinite;
+}
+
+.stars::after {
+    content: " ";
+    position: absolute;
+    top: 2000px;
+    width: 1px;
+    height: 1px;
+    background: transparent;
+    box-shadow: 100px 100px #FFF, 200px 200px #FFF, 300px 300px #FFF, 400px 100px #FFF, 500px 400px #FFF, 600px 200px #FFF, 800px 500px #FFF;
+}
+
+@keyframes animStar {
+    from {
+        transform: translateY(0px);
+    }
+
+    to {
+        transform: translateY(-2000px);
+    }
+}
+
+/* Container & Screens */
+.container {
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
+    text-align: center;
+    position: relative;
+    z-index: 10;
+}
+
+.screen {
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+.screen.hidden {
+    display: none;
+    opacity: 0;
+    transform: scale(0.95);
+}
+
+.screen.active {
+    display: block;
+    opacity: 1;
+    transform: scale(1);
+    animation: fadeIn 0.8s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Typography & Titles */
+h1.game-title {
+    font-family: 'Cinzel', serif;
+    font-size: 3rem;
+    color: var(--secondary-gold);
+    text-shadow: 0 0 10px var(--primary-gold), 0 0 20px var(--primary-gold);
+    margin-bottom: 10px;
+}
+
+.game-subtitle {
+    font-size: 1.2rem;
+    color: #aaa;
+    margin-bottom: 40px;
+    letter-spacing: 2px;
+}
+
+/* Buttons (Genshin Style) */
+.genshin-btn {
+    background: linear-gradient(180deg, #444 0%, #222 100%);
+    border: 2px solid var(--primary-gold);
+    color: var(--secondary-gold);
+    padding: 12px 30px;
+    font-size: 1.1rem;
+    font-family: 'Cinzel', serif;
+    cursor: pointer;
+    border-radius: 25px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.genshin-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease, height 0.6s ease;
+}
+
+.genshin-btn:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.genshin-btn:hover {
+    box-shadow: 0 0 15px var(--glow-color);
+    transform: translateY(-2px);
+    text-shadow: 0 0 5px #fff;
+}
+
+.primary-btn {
+    font-size: 1.5rem;
+    padding: 15px 50px;
+    background: linear-gradient(135deg, #3a3a5e 0%, #1b1b3a 100%);
+    border-color: #fcf6ba;
+}
+
+.small-btn {
+    font-size: 0.9rem;
+    padding: 8px 15px;
+}
+
+/* Card 3D Flip System */
+.card-area {
+    perspective: 1000px;
+    margin: 30px auto;
+    width: 300px;
+    height: 420px;
+    position: relative;
+    /* For mascot positioning */
+    z-index: 10;
+}
+
+.card-container {
+    width: 100%;
+    height: 100%;
+}
+
+.card {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+}
+
+.card.flipped {
+    transform: rotateY(180deg);
+}
+
+.card-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border: 3px solid var(--primary-gold);
+}
+
+/* Card Front */
+.card-front {
+    background: linear-gradient(135deg, var(--card-bg-front) 0%, #16162a 100%);
+    color: var(--secondary-gold);
+}
+
+.card-front::after {
+    content: "";
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 10px;
+    pointer-events: none;
+}
+
+.element-icon {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    text-shadow: 0 0 15px var(--primary-gold);
+    animation: pulse 3s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+
+    50% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+}
+
+#card-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.8rem;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.card-instruction {
+    font-size: 0.8rem;
+    opacity: 0.7;
+    margin-top: 20px;
+}
+
+/* Card Animations */
+.card-exit {
+    animation: cardExit 0.4s forwards ease-in;
+}
+
+.card-enter {
+    animation: cardEnter 0.4s forwards ease-out;
+}
+
+@keyframes cardExit {
+    0% {
+        opacity: 1;
+        transform: scale(1) rotateY(180deg);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(0.8) rotateY(180deg) translateY(-20px);
+    }
+}
+
+@keyframes cardEnter {
+    0% {
+        opacity: 0;
+        transform: scale(0.8) translateY(20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Card Back */
+.card-back {
+    background: var(--card-bg-back);
+    color: var(--card-text-back);
+    transform: rotateY(180deg);
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjZjRlNGJjIi8+CjxwYXRoIGQ9Ik0wIDBMNCA0Wk00IDBMMCA0WiIgc3Ryb2tlPSIjZThkOGIwIiBzdHJva2Utd2lkdGg9IjEiLz4KPC9zdmc+');
+    /* Subtle texture */
+}
+
+.card-back .card-content {
+    text-align: center;
+    line-height: 1.6;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+/* HUD and Controls */
+.header-hud {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 0 10px;
+}
+
+.progress-bar {
+    font-family: 'Cinzel', serif;
+    font-size: 1.2rem;
+    color: var(--primary-gold);
+}
+
+.controls {
+    margin-top: 20px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.5s ease;
+}
+
+/* Show controls only when needed, or always show but disable? User flow says "Next" button. */
+.controls.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Completion Screen */
+.completion-icon {
+    font-size: 5rem;
+    margin-bottom: 20px;
+    filter: drop-shadow(0 0 10px gold);
+}
+
+.completion-desc {
+    font-size: 1.2rem;
+    margin-bottom: 40px;
+    color: #ddd;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 480px) {
+    .game-title {
+        font-size: 2rem;
+    }
+
+    .card-area {
+        width: 260px;
+        height: 360px;
+    }
+}
